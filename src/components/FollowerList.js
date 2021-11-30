@@ -19,11 +19,10 @@ class FollowerList extends React.Component {
         })
     }
     render() {
-        // console.log(this.state.followers)
+        console.log(this.state)
         return(
             <div>
-                {this.state.followers.forEach(item => (
-                <Follower followers={item} />))}
+                {this.state.followers.map(item => <Follower info={item} /> )}
             </div>
         )
     }

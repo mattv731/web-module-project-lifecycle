@@ -2,13 +2,15 @@ import React from "react";
 
 class Follower extends React.Component {
     render() {
-        console.log(this.props)
+        const { info } = this.props;
+        console.log(info)
         return(
-            <img src={this.props.followers.avatar_url} />
+            <div>
+                <img src={this.props.info.avatar_url} width='100px' />
+                <p>{this.props.info.login}</p>
+            </div>
         )
     }
 }
-
-
 
 export default Follower;
