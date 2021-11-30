@@ -5,20 +5,35 @@ import FollowerList from './components/FollowerList';
 
 class App extends React.Component {
   state = {
-    userInfo: []
+    myInfo: [],
+    searched: 'mattv731',
+    followers: []
 }
 
   componentDidMount() {
-    axios.get('https://api.github.com/users/mattv731')
+    axios.get(`https://api.github.com/users/${this.state.searched}`)
   .then(resp => {
     this.setState({
       ...this.state,
-      userInfo:resp.data
+      myInfo:resp.data
   })
   // console.log(resp.data)
 })
   .catch(err => {
     console.log(err)
+  })
+}
+
+componentDidUpdate(){
+  axios.get('https://api.github.com/users/mattv731/followers')
+  .then((resp) => {
+      this.setState({
+          ...this.state,
+          followers: resp.data
+      })
+  })
+  .catch((err) => {
+      console.log(err)
   })
 }
 
@@ -28,17 +43,20 @@ class App extends React.Component {
       <h1>GITHUB INFO</h1>
       <div className="navBar">
         <div>Github Handle</div>
-        <div>Search</div>
+        <form>
+          <input placeholder="search"/>
+          <button>Search</button>
+        </form>
         </div>
       </header>
       <div>
-        <User userInfo={this.state.userInfo} />
+        <User userInfo={this.state.myInfo} />
       </div>
       <h3>
         Followers:
       </h3>
       <div>
-        <FollowerList />
+        <FollowerList followers={this.state.followers}/>
       </div>
     </div>);
   }
