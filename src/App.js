@@ -25,7 +25,7 @@ class App extends React.Component {
 }
 
 componentDidUpdate(){
-  axios.get('https://api.github.com/users/mattv731/followers')
+  axios.get(`https://api.github.com/users/${this.state.searched}/followers`)
   .then((resp) => {
       this.setState({
           ...this.state,
@@ -37,6 +37,13 @@ componentDidUpdate(){
   })
 }
 
+  handleChange = (e) => {
+    this.setState({
+      ...this.state,
+      searched: e.target.value
+    })
+  }
+
   render() {
     return(<div>
       <header>
@@ -44,13 +51,13 @@ componentDidUpdate(){
       <div className="navBar">
         <div>Github Handle</div>
         <form>
-          <input placeholder="search"/>
+          <input placeholder="search" onChange={this.handleChange}/>
           <button>Search</button>
         </form>
         </div>
       </header>
       <div>
-        <User userInfo={this.state.myInfo} />
+        <User userInfo={this.state.searched} />
       </div>
       <h3>
         Followers:
